@@ -1,4 +1,4 @@
-# wechat-server
+# wechat
 
 
 
