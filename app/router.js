@@ -1,9 +1,8 @@
 'use strict';
 
-/**
- * @param {Egg.Application} app - egg application
- */
 module.exports = app => {
-  const { router, controller } = app;
-  router.get('/', controller.home.index);
+  app.router.get('/users', 'user.users');
+  app.router.get('/tasks', 'task.tasks');
+  app.router.get('/sends', 'send.sends');
+  app.router.get('/revices', 'revice.revices');
 };

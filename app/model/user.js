@@ -6,28 +6,50 @@ module.exports = app => {
     } = app.Sequelize;
 
     const User = app.model.define('user', {
-        login: STRING,
-        name: STRING(30),
-        password: STRING(32),
-        age: INTEGER,
-        last_sign_in_at: DATE,
+        id: {
+            type: INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+        },
+        w_user_name: STRING,
+        w_nick_name: STRING,
+        name: STRING,
         created_at: DATE,
-        updated_at: DATE,
+        updated_at: DATE
     });
 
-    User.findByLogin = function* (login) {
-        return yield this.findOne({
+    User.isExistName = function* (username) {
+        const user = yield this.findOne({
             where: {
-                login: login
+                name: {
+                    $eq: name
+                }
             }
         });
+        console.log(user);
+        return user;
     }
 
-    User.prototype.logSignin = function* () {
-        yield this.update({
-            last_sign_in_at: new Date()
+    User.isExistWUserName = function* (w_user_name) {
+        const user = yield this.findOne({
+            where: {
+                w_user_name: {
+                    $eq: w_user_name
+                }
+            }
         });
+        return user;
     }
-
+    User.prototype.associate = function () {
+        app.model.User.hasMany(app.model.task, {
+            foreignKey: 'user_id'
+        });
+        app.model.User.hasMany(app.model.send, {
+            foreignKey: 'user_id'
+        });
+        app.model.User.hasMany(app.model.revice, {
+            foreignKey: 'user_id'
+        });
+    };
     return User;
 };

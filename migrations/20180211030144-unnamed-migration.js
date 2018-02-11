@@ -9,7 +9,7 @@ module.exports = {
             STRING
         } = Sequelize;
 
-        yield db.createTable('user', {
+        yield db.createTable('users', {
             id: {
                 type: INTEGER,
                 primaryKey: true,
@@ -21,7 +21,7 @@ module.exports = {
             created_at: DATE,
             updated_at: DATE
         });
-        yield db.createTable('task', {
+        yield db.createTable('tasks', {
             id: {
                 type: INTEGER,
                 primaryKey: true,
@@ -30,7 +30,7 @@ module.exports = {
             user_id: {
                 type: INTEGER,
                 references: {
-                    model: 'user',
+                    model: 'users',
                     key: 'id',
                 },
                 onUpdate: 'cascade',
@@ -41,7 +41,7 @@ module.exports = {
             created_at: DATE,
             updated_at: DATE
         });
-        yield db.createTable('send', {
+        yield db.createTable('sends', {
             id: {
                 type: INTEGER,
                 primaryKey: true,
@@ -51,7 +51,7 @@ module.exports = {
             user_id: {
                 type: INTEGER,
                 references: {
-                    model: 'user',
+                    model: 'users',
                     key: 'id',
                 },
                 onUpdate: 'cascade',
@@ -60,7 +60,7 @@ module.exports = {
             task_id: {
                 type: INTEGER,
                 references: {
-                    model: 'task',
+                    model: 'tasks',
                     key: 'id',
                 },
                 onUpdate: 'cascade',
@@ -69,7 +69,7 @@ module.exports = {
             created_at: DATE,
             updated_at: DATE
         });
-        yield db.createTable('revice', {
+        yield db.createTable('revices', {
             id: {
                 type: INTEGER,
                 primaryKey: true,
@@ -79,7 +79,7 @@ module.exports = {
             user_id: {
                 type: INTEGER,
                 references: {
-                    model: 'user',
+                    model: 'users',
                     key: 'id',
                 },
                 onUpdate: 'cascade',
@@ -91,9 +91,9 @@ module.exports = {
     }),
 
     down: co.wrap(function* (db) {
-        yield db.dropTable('send');
-        yield db.dropTable('revice');
-        yield db.dropTable('task');
-        yield db.dropTable('user');
+        yield db.dropTable('sends');
+        yield db.dropTable('revices');
+        yield db.dropTable('tasks');
+        yield db.dropTable('users');
     }),
 };
